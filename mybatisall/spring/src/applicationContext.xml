@@ -1,0 +1,7 @@
+
+<!--进行对象的创建 会调用无参构造方法
+id是 为对象起的名子 stu 相当于 Student stu =new....
+class 相当于 class的名子 Student -->
+
+<bean id="stu" class="org.niub.Student"/>
+

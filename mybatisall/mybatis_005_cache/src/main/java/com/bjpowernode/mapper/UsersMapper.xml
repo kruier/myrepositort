@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.mapper.UsersMapper">
+
+    <!--
+      //查询全部用户信息
+    List<Users> getAll();
+    -->
+    <select id="getAll" resultType="users" >
+        select id,username,birthday,sex,address
+        from users
+    </select>
+
+    <!--
+      //根据用户主键查用户
+    Users getById(Integer id);
+    -->
+    <select id="getById" parameterType="int" resultType="users">
+        select id,username,birthday,sex,address
+        from users
+        where id=#{zar}
+    </select>
+
+    <!--
+       //根据用户名模糊查询用户
+    List<Users> getByName(String name);
+    -->
+    <select id="getByName" parameterType="string" resultType="users">
+        select id,username,birthday,sex,address
+        from users
+        where username like '%${zar}%'
+    </select>
+    <!--
+       //用户的更新
+    int update(Users users);
+    private Integer id;
+    private String userName;
+    private Date birthday;
+    private String sex;
+    private String address;
+    -->
+    <update id="update" parameterType="users" >
+        update users set username = #{userName},birthday=#{birthday},sex=#{sex},address=#{address}
+        where id=#{id}
+    </update>
+
+
+    <!--
+      //增加用户
+    int insert(Users users);
+    -->
+    <insert id="insert" parameterType="users" >
+    <selectKey  keyProperty="id" resultType="int" order="AFTER">
+        select last_insert_id()
+    </selectKey>
+        insert into users (username, birthday, sex, address) values(#{userName},#{birthday},#{sex},#{address})
+    </insert>
+
+    <!--
+       //根据主键删除用户
+    int delete(Integer id);
+    -->
+    <delete id="delete" parameterType="int" >
+        delete from users
+        where id=#{id}
+    </delete>
+
+    <!--
+       //优化后的模糊查询
+    List<Users> getByNameGood(String name);
+    -->
+    <select id="getByNameGood" parameterType="string" resultType="users">
+        select id,username,birthday,sex,address
+        from users
+        where username like concat('%',#{name},'%')
+    </select>
+
+    <!--
+    //模糊用户名和地址查询
+    //如果参数超过一个,则parameterType不写
+    List<Users> getByNameOrAddress(
+            @Param("columnName")
+            String columnName,
+            @Param("columnValue")
+            String columnValue);
+    -->
+    <select id="getByNameOrAddress" resultType="users">
+        select id,username,birthday,sex,address
+        from users
+        where ${columnName} like concat('%',#{columnValue},'%')
+    </select>
+</mapper>

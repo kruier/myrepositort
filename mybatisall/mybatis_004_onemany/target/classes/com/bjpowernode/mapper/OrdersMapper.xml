@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.mapper.OrdersMapper">
+    <!--
+      //根据主键查询订单,并同时查询下此订单的客户信息
+    Orders getById(Integer id);
+    -->
+
+    <!--
+      手工绑定数据
+      实体类
+        private Integer id;
+        private String orderNumber;
+        private Double orderPrice;
+
+        //关联下此订单的客户信息,多方持有一方的对象
+        private Customer customer;
+    -->
+    <resultMap id="ordersmap" type="orders">
+        <!--主键绑定-->
+        <id property="id" column="oid"></id>
+        <!--非主键绑定-->
+        <result property="orderNumber" column="orderNumber"></result>
+        <result property="orderPrice" column="orderPrice"></result>
+        <!--多出来的一咕噜绑定
+            private Integer id;
+            private String name;
+            private Integer age;
+
+            //该客户名下的所有订单的集合,一方持有多方的集合
+            private List<Orders> ordersList; //不用管
+        -->
+        <association property="customer" javaType="customer">
+            <id property="id" column="cid"></id>
+            <result property="name" column="name"></result>
+            <result property="age" column="age"></result>
+        </association>
+    </resultMap>
+    <select id="getById" parameterType="int" resultMap="ordersmap">
+        select o.id oid,orderNumber,orderPrice,customer_id,c.id cid,name,age
+        from orders o inner join customer c on o.customer_id = c.id
+        where o.id=#{id}
+    </select>
+</mapper>

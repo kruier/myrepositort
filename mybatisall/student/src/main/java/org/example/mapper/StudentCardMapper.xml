@@ -1,0 +1,6 @@
+<mapper namespace="net.biancheng.mapper.StudentCardMapper">
+    <select id="selectStuCardById"
+            resultType="net.biancheng.po.StudentCard">
+        SELECT * FROM studentCard WHERE id = #{id}
+    </select>
+</mapper>

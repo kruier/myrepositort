@@ -1,0 +1,16 @@
+<mapper namespace="net.biancheng.mapper.StudentMapper">
+    <!-- 一对一根据id查询学生信息：级联查询的第一种方法（嵌套查询，执行两个SQL语句） -->
+    <resultMap type="net.biancheng.po.Student" id="cardAndStu1">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="sex" column="sex" />
+        <!-- 一对一级联查询 -->
+        <association property="studentCard" column="cardId"
+                     javaType="net.biancheng.po.StudentCard"
+                     select="net.biancheng.mapper.StudentCardMapper.selectStuCardById" />
+    </resultMap>
+    <select id="selectStuById1" parameterType="Integer"
+            resultMap="cardAndStu1">
+        select * from student where id=#{id}
+    </select>
+</mapper>

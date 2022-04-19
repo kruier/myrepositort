@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--读取jdbc.properties属性-->
+    <properties resource="jdbc.properties"></properties>
+    <!--设置日志输出-->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <!--注册实体类的别名-->
+    <typeAliases>
+        <package name="com.bjpowernode.pojo"></package>
+    </typeAliases>
+    <!--配置环境变量-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <!--
+                    private String driver;
+                    private String url;
+                    private String username;
+                    private String password;
+                -->
+                <property name="driver" value="${jdbc.driverClassName}"></property>
+                <property name="url" value="${jdbc.url}"></property>
+                <property name="username" value="${jdbc.username}"></property>
+                <property name="password" value="${jdbc.password}"></property>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--注册mapper.xml文件-->
+    <mappers>
+        <!--<mapper class="com.bjpowernode.mapper.UsersMapper"></mapper>-->
+        <!--批量注册-->
+        <package name="com.bjpowernode.mapper"></package>
+    </mappers>
+</configuration>
