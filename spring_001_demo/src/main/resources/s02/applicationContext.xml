@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+    <!--创建学生对象-->
+    <bean id="stu" class="com.bjpowernode.pojo2.Student" autowire="byName">
+        <property name="name" value="李四"></property>
+        <property name="age" value="22"></property>
+        <!--<property name="school" ref="school"></property>-->
+    </bean>
+    <!--创建学校对象-->
+    <bean id="school" class="com.bjpowernode.pojo2.School">
+        <property name="name" value="清华大学"></property>
+        <property name="address" value="海淀区"></property>
+    </bean>
+</beans>

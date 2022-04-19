@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--导入applicationContext_mapper.xml文件-->
+    <import resource="applicationContext_mapper.xml"></import>
+    <!--SM是基于注解的开发,所以添加包扫描-->
+    <context:component-scan base-package="com.bjpowernode.service.impl"></context:component-scan>
+    <!--事务处理-->
+
+    <!--1.添加事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--因为事务必须关联数据库处理,所以要配置数据源-->
+        <property name="dataSource" ref="dataSource"></property>
+     </bean>
+
+    <!--2.添加事务的注解驱动-->
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+</beans>

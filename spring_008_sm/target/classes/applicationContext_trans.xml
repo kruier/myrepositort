@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd  http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--此配置文件与applicationContext_service.xml的功能一样,只是事务配置不同-->
+
+    <!--导入applicationContext_mapper.xml-->
+    <import resource="applicationContext_mapper.xml"></import>
+    <!--添加包扫描-->
+    <context:component-scan base-package="com.bjpowernode.service.impl"></context:component-scan>
+    <!--添加事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!--配置事务切面-->
+    <tx:advice id="myadvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*select*" read-only="true"/>
+            <tx:method name="*find*" read-only="true"/>
+            <tx:method name="*search*" read-only="true"/>
+            <tx:method name="*get*" read-only="true"/>
+            <tx:method name="*insert*" propagation="REQUIRED" no-rollback-for="ArithmeticException"/>
+            <tx:method name="*add*" propagation="REQUIRED"/>
+            <tx:method name="*save*" propagation="REQUIRED" no-rollback-for="ArithmeticException"/>
+            <tx:method name="*set*" propagation="REQUIRED"/>
+            <tx:method name="*update*" propagation="REQUIRED"/>
+            <tx:method name="*change*" propagation="REQUIRED"/>
+            <tx:method name="*modify*" propagation="REQUIRED"/>
+            <tx:method name="*delete*" propagation="REQUIRED"/>
+            <tx:method name="*remove*" propagation="REQUIRED"/>
+            <tx:method name="*drop*" propagation="REQUIRED"/>
+            <tx:method name="*clear*" propagation="REQUIRED"/>
+            <tx:method name="*" propagation="SUPPORTS"/>
+        </tx:attributes>
+    </tx:advice>
+    <!--绑定切面和切入点-->
+    <aop:config>
+        <aop:pointcut id="mycut" expression="execution(* com.bjpowernode.service.impl.*.*(..))"></aop:pointcut>
+        <aop:advisor  advice-ref="myadvice" pointcut-ref="mycut"></aop:advisor>
+    </aop:config>
+</beans>

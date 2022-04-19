@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.mapper.AccountsMapper">
+
+    <!--
+      //增加帐户
+    int save(Accounts accounts);
+    private Integer aid;
+    private String aname;
+    private String acontent;
+    -->
+    <insert id="save" parameterType="accounts">
+        insert into accounts values(#{aid},#{aname},#{acontent})
+    </insert>
+</mapper>

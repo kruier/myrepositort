@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--创建学校的对象,使用构造方法参数名称注入值-->
+    <bean id="school" class="com.bjpowernode.pojo3.School">
+        <constructor-arg name="address1" value="海淀区"></constructor-arg>
+        <constructor-arg name="name1" value="清华大学"></constructor-arg>
+    </bean>
+
+    <!--创建学生对象,使用构造方法的参数的下标注入值-->
+    <bean id="student" class="com.bjpowernode.pojo3.Student">
+        <constructor-arg index="0" value="钱七"></constructor-arg>
+        <constructor-arg index="2" ref="school"></constructor-arg>
+        <constructor-arg index="1" value="22"></constructor-arg>
+    </bean>
+
+    <!--创建学生对象,使用默认的构造方法的参数顺序-->
+    <bean id="stuSequence" class="com.bjpowernode.pojo3.Student">
+        <constructor-arg value="陈十"></constructor-arg>
+        <constructor-arg value="22"></constructor-arg>
+        <constructor-arg ref="school"></constructor-arg>
+    </bean>
+
+</beans>
